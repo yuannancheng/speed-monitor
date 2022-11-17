@@ -10,14 +10,14 @@ To use this extension, you will need
 
 ### Install from Gnome Extensions
 
-Visit [Internet Speed Meter - GNOME Shell Extensions](https://extensions.gnome.org/extension/2980/internet-speed-meter) 
+Visit [SpeedBuzz - GNOME Shell Extensions](https://extensions.gnome.org/extension/2980/SpeedBuzz) 
 
 ### Install from source
 
 1. Clone this repository
 
    ```bash
-   git clone https://github.com/AlShakib/InternetSpeedMeter.git
+   git clone https://github.com/HRIDOY-BUZZ/SpeedBuzz.git
    ```
 
 2. Change current directory to repository
@@ -48,4 +48,4 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 [GNU General Public License v3.0](LICENSE)
 
-Copyright © 2020 - 2022 [Al Shakib](https://alshakib.dev)
+Copyright © 2022 Al-Amin Islam Hridoy
