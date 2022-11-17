@@ -23,7 +23,7 @@ Visit [SpeedBuzz - GNOME Shell Extensions](https://extensions.gnome.org/extensio
 2. Change current directory to repository
 
    ```bash
-   cd InternetSpeedMeter
+   cd SpeedBuzz
    ```
 
 3. Now run
