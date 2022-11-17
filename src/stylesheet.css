@@ -1,0 +1,12 @@
+/*
+ * Name: Speed-Buzz: Internet Speed Meter
+ * Description: A simple and minimal internet speed meter extension for Gnome Shell.
+ * Author: Al-Amin Islam Hridoy
+ * GitHub: https://github.com/HRIDOY-BUZZ/SpeedBuzz
+ * License: GPLv3.0
+ */
+
+.netSpeedLabel {
+    min-width: 210px;
+    text-align: left;
+}
