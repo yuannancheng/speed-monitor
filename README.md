@@ -1,6 +1,6 @@
-# ⇅ Internet Speed Meter
+# ⇅ SpeedBuzz - An Internet Speed Meter
 
-A simple and minimal Internet Speed Meter extension for the Gnome Shell.
+A simple Internet Upload/Download Speed Meter extension for the Gnome Shell.
 
 ![Screenshot](screenshot.png)
 
