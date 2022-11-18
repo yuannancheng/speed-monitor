@@ -34,7 +34,7 @@ Visit [SpeedBuzz - GNOME Shell Extensions](https://extensions.gnome.org/extensio
 
 4. If you are using Wayland, log out and then log in. Otherwise press `ALT + F2` and then type `r` and press `Enter`.
 
-6. Enable **Internet Speed Meter** from the [Extension Manager](https://github.com/mjakeman/extension-manager)
+6. Enable **SpeedBuzz** from the [Gnome Extensions App](https://gitlab.gnome.org/GNOME/gnome-shell/-/tree/HEAD/subprojects/extensions-app)
 
 ## Contributing
 
