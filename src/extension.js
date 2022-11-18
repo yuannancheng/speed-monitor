@@ -15,7 +15,7 @@ const Shell = imports.gi.Shell;
 const refreshTime = 1.0; // Set refresh time to one second.
 const unitBase = 1024.0; // 1 Gb == 1024Mb or 1Mb == 1024Kb etc.
 const units = ["Kbps", "Mbps", "Gbps", "Tbps"];
-const defaultNetSpeedText = 'BISM: ↓ -.-- --  ↑ -.-- --';
+const defaultNetSpeedText = 'SB: ↓ -.-- --  ↑ -.-- --';
 const bit = 8; // 8 bits make a byte
 
 let prevUploadBits = 0,

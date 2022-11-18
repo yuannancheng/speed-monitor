@@ -42,7 +42,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 ## Thanks to
 
-- Project Icon is made by [Freepik](https://www.flaticon.com/authors/freepik) from [www.flaticon.com](https://www.flaticon.com)
+- Project Icon is made by [Freepik](https://www.flaticon.com/authors/eucalyp) from [www.flaticon.com](https://www.flaticon.com)
 
 ## License
 
