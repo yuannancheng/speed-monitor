@@ -36,14 +36,6 @@ Visit [SpeedBuzz - GNOME Shell Extensions](https://extensions.gnome.org/extensio
 
 6. Enable **SpeedBuzz** from the [Gnome Extensions App](https://gitlab.gnome.org/GNOME/gnome-shell/-/tree/HEAD/subprojects/extensions-app)
 
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-## Thanks to
-
-- Project Icon is made by [Freepik](https://www.flaticon.com/authors/eucalyp) from [www.flaticon.com](https://www.flaticon.com)
-
 ## License
 
 [GNU General Public License v3.0](LICENSE)
