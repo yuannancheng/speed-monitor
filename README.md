@@ -2,7 +2,7 @@
 
 A simple Internet Upload/Download Speed Meter extension for the Gnome Shell.
 
-![Screenshot](screenshot.png)
+![Screenshot](Screenshot.png)
 
 To use this extension, you will need
 
