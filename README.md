@@ -10,7 +10,7 @@ To use this extension, you will need
 
 ### Install from Gnome Extensions
 
-Visit [SpeedBuzz - GNOME Shell Extensions](https://extensions.gnome.org/extension/2980/SpeedBuzz) 
+<!-- Visit [SpeedBuzz - GNOME Shell Extensions](https://extensions.gnome.org/extension/2980/SpeedBuzz)  -->
 
 ### Install from source
 
