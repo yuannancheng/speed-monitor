@@ -6,11 +6,16 @@
  * License: GPLv3.0
  */
 
-const St = imports.gi.St;
-const Main = imports.ui.main;
-const Clutter = imports.gi.Clutter;
-const Mainloop = imports.mainloop;
-const Shell = imports.gi.Shell;
+import St from "gi://St";
+import Clutter from "gi://Clutter";
+import GLib from "gi://GLib";
+import Shell from "gi://Shell";
+
+import * as Main from "resource:///org/gnome/shell/ui/main.js";
+import {
+  Extension,
+  gettext as _,
+} from "resource:///org/gnome/shell/extensions/extension.js";
 
 const refreshTime = 1.0; // Set refresh time to one second.
 const unitBase = 1024.0; // 1 Gb == 1024Mb or 1Mb == 1024Kb etc.
@@ -22,19 +27,17 @@ let prevUploadBits = 0,
     prevDownloadBits = 0;
 let containerButton, netSpeedLabel, refreshLoop;
 
-function updateNetSpeed() {
+const updateNetSpeed = () => {
     if (netSpeedLabel) {
         try {
-            let lines = Shell.get_file_contents_utf8_sync('/proc/net/dev').split('\n');
+            const lines = Shell.get_file_contents_utf8_sync('/proc/net/dev').split('\n');
             let uploadBits = 0;
             let downloadBits = 0;
-            let line;
             for (let i = 0; i < lines.length; ++i) {
-                line = lines[i].trim();
-                let column = line.split(/\W+/);
+                const line = lines[i].trim();
+                const column = line.split(/\W+/);
 
-                if (column.length <= 2)
-                    break;
+                if (column.length <= 2) break;
 
                 if (column[0] != 'lo' && !isNaN(parseInt(column[1])) && !column[0].match(/^br[0-9]+/) && !column[0].match(/^tun[0-9]+/) && !column[0].match(/^tap[0-9]+/) && !column[0].match(/^vnet[0-9]+/) && !column[0].match(/^virbr[0-9]+/)) {
                     uploadBits += (parseInt(column[9]) * bit);
@@ -42,14 +45,10 @@ function updateNetSpeed() {
                 }
             }
 
-            // Current upload speed
-            let uploadSpeed = (uploadBits - prevUploadBits) / (refreshTime * unitBase);
+            const uploadSpeed = (uploadBits - prevUploadBits) / (refreshTime * unitBase);
+            const downloadSpeed = (downloadBits - prevDownloadBits) / (refreshTime * unitBase);
 
-            // Current download speed
-            let downloadSpeed = (downloadBits - prevDownloadBits) / (refreshTime * unitBase);
-
-            // Show upload + download = total speed on the shell
-            netSpeedLabel.set_text("SB:" + " ↓ " + getFormattedSpeed(downloadSpeed) + "  ↑ " + getFormattedSpeed(uploadSpeed));
+            netSpeedLabel.set_text(`SB: ↓ ${getFormattedSpeed(downloadSpeed)}  ↑ ${getFormattedSpeed(uploadSpeed)}`);
 
             prevUploadBits = uploadBits;
             prevDownloadBits = downloadBits;
@@ -59,18 +58,18 @@ function updateNetSpeed() {
         }
     }
     return false;
-}
+};
 
-function getFormattedSpeed(speed) {
+const getFormattedSpeed = (speed) => {
     let i = 0;
-    while (speed >= unitBase) { // Convert speed to Kb, Mb, Gb or Tb
+    while (speed >= unitBase) {
         speed /= unitBase;
         i++;
     }
-    return String(speed.toFixed(2) + " " + units[i]);
-}
+    return `${speed.toFixed(2)} ${units[i]}`;
+};
 
-function enable() {
+const enable = () => {
     containerButton = new St.Bin({
         style_class: 'panel-button',
         reactive: true,
@@ -87,13 +86,13 @@ function enable() {
     containerButton.set_child(netSpeedLabel);
 
     Main.panel._rightBox.insert_child_at_index(containerButton, 0);
-    refreshLoop = Mainloop.timeout_add_seconds(refreshTime, updateNetSpeed);
-}
+    refreshLoop = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, refreshTime, updateNetSpeed);
+};
 
-function disable() {
+const disable = () => {
     if (refreshLoop) {
-        Mainloop.source_remove(refreshLoop);
-        refreshLoop = null
+        GLib.source_remove(refreshLoop);
+        refreshLoop = null;
     }
     if (containerButton) {
         Main.panel._rightBox.remove_child(containerButton);
@@ -103,5 +102,17 @@ function disable() {
     if (netSpeedLabel) {
         netSpeedLabel.destroy();
         netSpeedLabel = null;
+    }
+};
+
+export default class SpeedBuzzExtension extends Extension {
+    enable() {
+        super.enable();
+        enable();
+    }
+
+    disable() {
+        super.disable();
+        disable();
     }
 }
