@@ -34,10 +34,10 @@ To use this extension, you will need
 
 4. If you are using Wayland, log out and then log in. Otherwise press `ALT + F2` and then type `r` and press `Enter`.
 
-6. Enable **SpeedBuzz** from the [Gnome Extensions App](https://gitlab.gnome.org/GNOME/gnome-shell/-/tree/HEAD/subprojects/extensions-app)
+6. Enable **SpeedBuzz** from the [Gnome Extensions App](https://gitlab.gnome.org/GNOME/gnome-shell/-/tree/HEAD/subprojects/extensions-app) or [Gnome Extension Manager](https://mattjakeman.com/apps/extension-manager.html)
 
 ## License
 
 [GNU General Public License v3.0](LICENSE)
 
-Copyright © 2022 Al-Amin Islam Hridoy
+Copyright © 2024 Al-Amin Islam Hridoy
