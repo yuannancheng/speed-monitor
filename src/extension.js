@@ -6,11 +6,12 @@
  * License: GPLv3.0
  */
 
-const St = imports.gi.St;
-const Main = imports.ui.main;
-const Clutter = imports.gi.Clutter;
-const Mainloop = imports.mainloop;
-const Shell = imports.gi.Shell;
+import St from "gi://St";
+import Clutter from "gi://Clutter";
+import GLib from "gi://GLib";
+import Shell from "gi://Shell";
+
+import * as Main from "resource:///org/gnome/shell/ui/main.js";
 
 const refreshTime = 1.0; // Set refresh time to one second.
 const unitBase = 1024.0; // 1 Gb == 1024Mb or 1Mb == 1024Kb etc.
@@ -87,12 +88,12 @@ function enable() {
     containerButton.set_child(netSpeedLabel);
 
     Main.panel._rightBox.insert_child_at_index(containerButton, 0);
-    refreshLoop = Mainloop.timeout_add_seconds(refreshTime, updateNetSpeed);
+    refreshLoop = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, refreshTime, updateNetSpeed);
 }
 
 function disable() {
     if (refreshLoop) {
-        Mainloop.source_remove(refreshLoop);
+        GLib.source_remove(refreshLoop);
         refreshLoop = null
     }
     if (containerButton) {
