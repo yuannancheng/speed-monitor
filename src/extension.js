@@ -69,50 +69,40 @@ const getFormattedSpeed = (speed) => {
     return `${speed.toFixed(2)} ${units[i]}`;
 };
 
-const enable = () => {
-    containerButton = new St.Bin({
-        style_class: 'panel-button',
-        reactive: true,
-        can_focus: false,
-        x_expand: true,
-        y_expand: false,
-        track_hover: false
-    });
-    netSpeedLabel = new St.Label({
-        text: defaultNetSpeedText,
-        style_class: 'netSpeedLabel',
-        y_align: Clutter.ActorAlign.CENTER
-    });
-    containerButton.set_child(netSpeedLabel);
-
-    Main.panel._rightBox.insert_child_at_index(containerButton, 0);
-    refreshLoop = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, refreshTime, updateNetSpeed);
-};
-
-const disable = () => {
-    if (refreshLoop) {
-        GLib.source_remove(refreshLoop);
-        refreshLoop = null;
-    }
-    if (containerButton) {
-        Main.panel._rightBox.remove_child(containerButton);
-        containerButton.destroy();
-        containerButton = null;
-    }
-    if (netSpeedLabel) {
-        netSpeedLabel.destroy();
-        netSpeedLabel = null;
-    }
-};
-
 export default class SpeedBuzzExtension extends Extension {
     enable() {
-        super.enable();
-        enable();
+        containerButton = new St.Bin({
+            style_class: 'panel-button',
+            reactive: true,
+            can_focus: false,
+            x_expand: true,
+            y_expand: false,
+            track_hover: false
+        });
+        netSpeedLabel = new St.Label({
+            text: defaultNetSpeedText,
+            style_class: 'netSpeedLabel',
+            y_align: Clutter.ActorAlign.CENTER
+        });
+        containerButton.set_child(netSpeedLabel);
+    
+        Main.panel._rightBox.insert_child_at_index(containerButton, 0);
+        refreshLoop = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, refreshTime, updateNetSpeed);
     }
 
     disable() {
-        super.disable();
-        disable();
+        if (refreshLoop) {
+            GLib.source_remove(refreshLoop);
+            refreshLoop = null;
+        }
+        if (containerButton) {
+            Main.panel._rightBox.remove_child(containerButton);
+            containerButton.destroy();
+            containerButton = null;
+        }
+        if (netSpeedLabel) {
+            netSpeedLabel.destroy();
+            netSpeedLabel = null;
+        }
     }
 }
