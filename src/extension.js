@@ -6,16 +6,11 @@
  * License: GPLv3.0
  */
 
-import St from "gi://St";
-import Clutter from "gi://Clutter";
-import GLib from "gi://GLib";
-import Shell from "gi://Shell";
-
-import * as Main from "resource:///org/gnome/shell/ui/main.js";
-import {
-  Extension,
-  gettext as _,
-} from "resource:///org/gnome/shell/extensions/extension.js";
+const St = imports.gi.St;
+const Clutter = imports.gi.Clutter;
+const GLib = imports.gi.GLib;
+const Shell = imports.gi.Shell;
+const Main = imports.ui.main;
 
 const refreshTime = 1.0; // Set refresh time to one second.
 const unitBase = 1024.0; // 1 Gb == 1024Mb or 1Mb == 1024Kb etc.
