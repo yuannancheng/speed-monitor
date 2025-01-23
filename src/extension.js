@@ -12,6 +12,11 @@ const GLib = imports.gi.GLib;
 const Shell = imports.gi.Shell;
 const Main = imports.ui.main;
 
+import {
+    Extension,
+    gettext as _,
+  } from "resource:///org/gnome/shell/extensions/extension.js";
+
 const refreshTime = 1.0; // Set refresh time to one second.
 const unitBase = 1024.0; // 1 Gb == 1024Mb or 1Mb == 1024Kb etc.
 const units = ["Kbps", "Mbps", "Gbps", "Tbps"];
