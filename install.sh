@@ -8,6 +8,7 @@ NC='\033[0m' # No Color
 SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )";
 LOG_DIR="${SRC_DIR}/log"
 LOG_FILE="${LOG_DIR}/build.log";
+UUID='speed-monitor@yuannancheng'
 mkdir -p "${LOG_DIR}"
 if [[ -f "${LOG_FILE}" ]]; then
   echo '' >> "${LOG_FILE}"
@@ -77,16 +78,16 @@ is_warning() {
 install() {
   print "Installing to ${INSTALL_DIR}"
   mkdir -p "${INSTALL_DIR}"
-  rm -rf "${INSTALL_DIR}/SpeedBuzz@hridoybuzz.dev"
-  cp -rf "${SRC_DIR}/src" "${INSTALL_DIR}/SpeedBuzz@hridoybuzz.dev" &>> "$LOG_FILE"
+  rm -rf "${INSTALL_DIR}/${UUID}"
+  cp -rf "${SRC_DIR}/src" "${INSTALL_DIR}/${UUID}" &>> "$LOG_FILE"
   is_failed "Done" "Skipping: Can not install to ${INSTALL_DIR}. See log for more info."
 }
 
 # build for release
 build() {
-  print "Creating SpeedBuzz@hridoybuzz.dev.zip"
+  print "Creating ${UUID}.zip"
   mkdir -p "${SRC_DIR}/out"
-  zip -6rXj "$SRC_DIR/out/SpeedBuzz@hridoybuzz.dev.zip" "src" &>> "$LOG_FILE"
+  zip -6rXj "$SRC_DIR/out/${UUID}.zip" "src" &>> "$LOG_FILE"
   is_failed "Done" "Skipping: Creating zip is failed. See log for more info."
 }
 

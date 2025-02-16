@@ -19,20 +19,19 @@ import {
 
 const refreshTime = 1.0; // Set refresh time to one second.
 const unitBase = 1024.0; // 1 Gb == 1024Mb or 1Mb == 1024Kb etc.
-const units = ["Kbps", "Mbps", "Gbps", "Tbps"];
-const defaultNetSpeedText = 'SB: ↓ -.-- --  ↑ -.-- --';
-const bit = 8; // 8 bits make a byte
+const units = ["KB/s", "MB/s", "GB/s", "TB/s"];
+const defaultNetSpeedText = '↓ --.- -/-  ↑ --.- -/-';
 
-let prevUploadBits = 0,
-    prevDownloadBits = 0;
+let prevUploadBytes = 0,
+    prevDownloadBytes = 0;
 let containerButton, netSpeedLabel, refreshLoop;
 
 const updateNetSpeed = () => {
     if (netSpeedLabel) {
         try {
             const lines = Shell.get_file_contents_utf8_sync('/proc/net/dev').split('\n');
-            let uploadBits = 0;
-            let downloadBits = 0;
+            let uploadBytes = 0;
+            let downloadBytes = 0;
             for (let i = 0; i < lines.length; ++i) {
                 const line = lines[i].trim();
                 const column = line.split(/\W+/);
@@ -40,18 +39,18 @@ const updateNetSpeed = () => {
                 if (column.length <= 2) break;
 
                 if (column[0] != 'lo' && !isNaN(parseInt(column[1])) && !column[0].match(/^br[0-9]+/) && !column[0].match(/^tun[0-9]+/) && !column[0].match(/^tap[0-9]+/) && !column[0].match(/^vnet[0-9]+/) && !column[0].match(/^virbr[0-9]+/)) {
-                    uploadBits += (parseInt(column[9]) * bit);
-                    downloadBits += (parseInt(column[1]) * bit);
+                    uploadBytes += parseInt(column[9]);
+                    downloadBytes += parseInt(column[1]);
                 }
             }
 
-            const uploadSpeed = (uploadBits - prevUploadBits) / (refreshTime * unitBase);
-            const downloadSpeed = (downloadBits - prevDownloadBits) / (refreshTime * unitBase);
+            const uploadSpeed = (uploadBytes - prevUploadBytes) / (refreshTime * unitBase);
+            const downloadSpeed = (downloadBytes - prevDownloadBytes) / (refreshTime * unitBase);
 
-            netSpeedLabel.set_text(`SB: ↓ ${getFormattedSpeed(downloadSpeed)}  ↑ ${getFormattedSpeed(uploadSpeed)}`);
+            netSpeedLabel.set_text(`↓ ${getFormattedSpeed(downloadSpeed)}  ↑ ${getFormattedSpeed(uploadSpeed)}`);
 
-            prevUploadBits = uploadBits;
-            prevDownloadBits = downloadBits;
+            prevUploadBytes = uploadBytes;
+            prevDownloadBytes = downloadBytes;
             return true;
         } catch (e) {
             netSpeedLabel.set_text(defaultNetSpeedText);
@@ -62,11 +61,11 @@ const updateNetSpeed = () => {
 
 const getFormattedSpeed = (speed) => {
     let i = 0;
-    while (speed >= unitBase) {
+    while (speed >= unitBase && i < units.length - 1) {
         speed /= unitBase;
         i++;
     }
-    return `${speed.toFixed(2)} ${units[i]}`;
+    return `${speed.toFixed(1)} ${units[i]}`;
 };
 
 export default class SpeedBuzzExtension extends Extension {
@@ -77,7 +76,7 @@ export default class SpeedBuzzExtension extends Extension {
             can_focus: false,
             x_expand: true,
             y_expand: false,
-            track_hover: false
+            track_hover: true
         });
         netSpeedLabel = new St.Label({
             text: defaultNetSpeedText,
@@ -85,8 +84,7 @@ export default class SpeedBuzzExtension extends Extension {
             y_align: Clutter.ActorAlign.CENTER
         });
         containerButton.set_child(netSpeedLabel);
-    
-        Main.panel._rightBox.insert_child_at_index(containerButton, 0);
+        Main.panel._leftBox.add_child(containerButton);
         refreshLoop = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, refreshTime, updateNetSpeed);
     }
 
@@ -96,7 +94,7 @@ export default class SpeedBuzzExtension extends Extension {
             refreshLoop = null;
         }
         if (containerButton) {
-            Main.panel._rightBox.remove_child(containerButton);
+            Main.panel._leftBox.remove_child(containerButton);
             containerButton.destroy();
             containerButton = null;
         }
