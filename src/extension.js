@@ -23,7 +23,8 @@ const units = ["KB/s", "MB/s", "GB/s", "TB/s"];
 const defaultNetSpeedText = '↓ --.- -/-  ↑ --.- -/-';
 
 let prevUploadBytes = 0,
-    prevDownloadBytes = 0;
+    prevDownloadBytes = 0,
+    prevRecordTime = 0;
 let containerButton, netSpeedLabel, refreshLoop;
 
 const updateNetSpeed = () => {
@@ -47,10 +48,15 @@ const updateNetSpeed = () => {
             const uploadSpeed = (uploadBytes - prevUploadBytes) / (refreshTime * unitBase);
             const downloadSpeed = (downloadBytes - prevDownloadBytes) / (refreshTime * unitBase);
 
-            netSpeedLabel.set_text(`↓ ${getFormattedSpeed(downloadSpeed)}  ↑ ${getFormattedSpeed(uploadSpeed)}`);
+            const now = new Date().getTime()
+            if (!((now - prevRecordTime) / 1e3 > 5 * refreshTime)) {
+                // 避免长时间挂起后显示的网速异常大
+                netSpeedLabel.set_text(`↓ ${getFormattedSpeed(downloadSpeed)}  ↑ ${getFormattedSpeed(uploadSpeed)}`);
+            }
 
             prevUploadBytes = uploadBytes;
             prevDownloadBytes = downloadBytes;
+            prevRecordTime = now
             return true;
         } catch (e) {
             netSpeedLabel.set_text(defaultNetSpeedText);
