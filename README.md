@@ -6,7 +6,7 @@ A simple Internet Upload/Download Speed Meter extension for the Gnome Shell.
 
 To use this extension, you will need
 
-- Gnome Shell 40 or later
+- GNOME Shell 45 – 50 (verified against GNOME Shell 50.1)
 
 ### Install from Gnome Extensions
 

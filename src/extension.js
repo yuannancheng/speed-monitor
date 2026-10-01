@@ -101,12 +101,12 @@ export default class SpeedBuzzExtension extends Extension {
         }
         if (containerButton) {
             Main.panel._leftBox.remove_child(containerButton);
+            // Destroying the button also destroys the child label,
+            // so the label must not be destroyed again (would raise
+            // "Object St.Label has been already disposed").
             containerButton.destroy();
             containerButton = null;
         }
-        if (netSpeedLabel) {
-            netSpeedLabel.destroy();
-            netSpeedLabel = null;
-        }
+        netSpeedLabel = null;
     }
 }
